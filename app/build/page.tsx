@@ -69,7 +69,7 @@ export default function GetStarted() {
       title: "Bot Created Successfully!",
       description: "Your AI-powered bot has been created and deployed.",
     });
-    router.push("/dashboard"); // Redirect to dashboard or confirmation page
+    router.push("/dashboard");
   };
 
   const updateFormData = (newData) => {
