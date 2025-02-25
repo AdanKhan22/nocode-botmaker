@@ -32,7 +32,7 @@ import { Button } from "@/components/ui/button";
 import {
   getDefaultBotConfiguration,
   type BotConfiguration,
-} from "./config/deafultconfig";
+} from "./bot-config/deafultConfig";
 
 const menuItems = [
   { id: "profile", label: "Bot Profile", icon: Bot },
