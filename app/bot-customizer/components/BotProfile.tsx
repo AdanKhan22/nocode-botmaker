@@ -1,8 +1,6 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +12,33 @@ export default function BotProfile() {
   const [botUsername, setBotUsername] = useState("");
   const [botDescription, setBotDescription] = useState("");
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
+
+  useEffect(() => {
+    const fetchBotConfig = async () => {
+      try {
+        const response = await fetch("/api/bot-config");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch bot configuration.");
+        }
+
+        const data = await response.json();
+
+        setBotName(data.botProfile?.name || "");
+        setBotUsername(data.botProfile?.username || "");
+        setBotDescription(data.botProfile?.description || "");
+      } catch (error) {
+        console.error("Error fetching bot config:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load bot configuration.",
+          variant: "destructive",
+        });
+      }
+    };
+
+    fetchBotConfig();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,36 +52,33 @@ export default function BotProfile() {
       return;
     }
 
-    const TELEGRAM_BOT_TOKEN = "";
+    const updatedConfig = {
+      botProfile: {
+        name: botName,
+        username: botUsername,
+        description: botDescription,
+      },
+    };
 
     try {
-      await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setMyName`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: botName }),
-        }
-      );
-
-      await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setMyDescription`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description: botDescription }),
-        }
-      );
-
-      toast({
-        title: "Success",
-        description: "Bot profile updated successfully on Telegram!",
+      const response = await fetch("api/bot-config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedConfig),
       });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({ title: "Success", description: "Bot profile updated!" });
+      } else {
+        throw new Error(result.error || "Failed to update bot config.");
+      }
     } catch (error) {
-      console.error("Error updating bot profile:", error);
+      console.error("Update error:", error);
       toast({
         title: "Error",
-        description: "Failed to update bot profile on Telegram.",
+        description: "Failed to update bot config.",
         variant: "destructive",
       });
     }
