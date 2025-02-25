@@ -71,7 +71,7 @@ export interface BotConfiguration {
         profilePicture: null,
       },
       commands: [
-        { id: "cmd_start", name: "/start", description: "Start the bot", category: "General" },
+        { id: "cmd_start", name: "/start", description: "Hi, How may i help you", category: "General" },
         { id: "cmd_help", name: "/help", description: "Show help menu", category: "General" },
       ],
       inlineQueries: {
