@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -14,23 +14,34 @@ interface Command {
   category: string;
 }
 
-export default function CommandManager() {
-  const [commands, setCommands] = useState<Command[]>([]);
+export default function CommandManager({ config, updateConfig }) {
+  const [commands, setCommands] = useState<Command[]>(config);
   const [newCommand, setNewCommand] = useState({
     name: "",
     description: "",
     category: "",
   });
 
+  useEffect(() => {
+    setCommands(config);
+  }, [config]);
+
   const addCommand = () => {
     if (newCommand.name && newCommand.description) {
-      setCommands([...commands, { ...newCommand, id: Date.now().toString() }]);
+      const updatedCommands = [
+        ...commands,
+        { ...newCommand, id: Date.now().toString() },
+      ];
+      setCommands(updatedCommands);
+      updateConfig(updatedCommands);
       setNewCommand({ name: "", description: "", category: "" });
     }
   };
 
   const removeCommand = (id: string) => {
-    setCommands(commands.filter((cmd) => cmd.id !== id));
+    const updatedCommands = commands.filter((cmd) => cmd.id !== id);
+    setCommands(updatedCommands);
+    updateConfig(updatedCommands);
   };
 
   return (
@@ -55,10 +66,6 @@ export default function CommandManager() {
               <p className="text-sm text-gray-500 mt-1">
                 Example: /start, /help, /settings
               </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Command names should start with a forward slash (/) and contain
-                only lowercase letters, numbers, and underscores.
-              </p>
             </div>
             <div>
               <Label htmlFor="command-description">Description</Label>
@@ -73,10 +80,6 @@ export default function CommandManager() {
               <p className="text-sm text-gray-500 mt-1">
                 Example: Start the bot, Display help menu, Adjust user settings
               </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Provide a clear and concise description of what the command
-                does.
-              </p>
             </div>
             <div>
               <Label htmlFor="command-category">Category</Label>
@@ -90,10 +93,6 @@ export default function CommandManager() {
               />
               <p className="text-sm text-gray-500 mt-1">
                 Example: General, Settings, Admin, Fun
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Categorize your commands to organize them better. Leave blank if
-                not applicable.
               </p>
             </div>
             <Button onClick={addCommand}>

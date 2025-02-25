@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,81 +9,34 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 
-export default function BotProfile() {
-  const [botName, setBotName] = useState("");
-  const [botUsername, setBotUsername] = useState("");
-  const [botDescription, setBotDescription] = useState("");
+export default function BotProfile({ config, updateConfig }) {
+  const [botName, setBotName] = useState(config.name);
+  const [botUsername, setBotUsername] = useState(config.username);
+  const [botDescription, setBotDescription] = useState(config.description);
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
 
   useEffect(() => {
-    const fetchBotConfig = async () => {
-      try {
-        const response = await fetch("/api/bot-config");
+    setBotName(config.name);
+    setBotUsername(config.username);
+    setBotDescription(config.description);
+  }, [config]);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch bot configuration.");
-        }
-
-        const data = await response.json();
-
-        setBotName(data.botProfile?.name || "");
-        setBotUsername(data.botProfile?.username || "");
-        setBotDescription(data.botProfile?.description || "");
-      } catch (error) {
-        console.error("Error fetching bot config:", error);
-        toast({
-          title: "Error",
-          description: "Failed to load bot configuration.",
-          variant: "destructive",
-        });
-      }
-    };
-
-    fetchBotConfig();
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!botName || !botUsername) {
-      toast({
-        title: "Error",
-        description: "Bot name and username are required.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     const updatedConfig = {
-      botProfile: {
-        name: botName,
-        username: botUsername,
-        description: botDescription,
-      },
+      ...config,
+      name: botName,
+      username: botUsername,
+      description: botDescription,
+      profilePicture: profilePicture
+        ? URL.createObjectURL(profilePicture)
+        : config.profilePicture,
     };
-
-    try {
-      const response = await fetch("api/bot-config", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedConfig),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        toast({ title: "Success", description: "Bot profile updated!" });
-      } else {
-        throw new Error(result.error || "Failed to update bot config.");
-      }
-    } catch (error) {
-      console.error("Update error:", error);
-      toast({
-        title: "Error",
-        description: "Failed to update bot config.",
-        variant: "destructive",
-      });
-    }
+    updateConfig(updatedConfig);
+    toast({
+      title: "Bot Profile Updated",
+      description: "Your bot's profile has been successfully updated.",
+    });
   };
 
   return (
