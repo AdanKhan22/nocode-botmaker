@@ -1,55 +1,77 @@
-import { Check } from "lucide-react"
+import { Check } from "lucide-react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
-const plans = [
+const pricingPlans = [
   {
     name: "Basic",
-    price: "$9",
-    features: ["1 Bot", "100 Users", "Basic Commands", "Email Support"],
+    price: "Free",
+    features: [
+      "Unlimited Bots",
+      "Deploy Yourself",
+      "Basic Commands",
+      "Email Support",
+    ],
+    buttonText: "Get Started",
   },
   {
     name: "Pro",
-    price: "$29",
-    features: ["5 Bots", "Unlimited Users", "Advanced Commands", "Priority Support"],
+    price: 20,
+    features: [
+      "3 Bots",
+      "Unlimited Users",
+      "Advanced Commands",
+      "Priority Support",
+    ],
+    buttonText: "Choose Pro",
   },
   {
     name: "Enterprise",
     price: "Custom",
-    features: ["Unlimited Bots", "Unlimited Users", "Custom Features", "Dedicated Support"],
+    features: [
+      "Unlimited Bots",
+      "Unlimited Users",
+      "Custom Features",
+      "Dedicated Support",
+    ],
+    buttonText: "Contact Us",
   },
-]
+] as const;
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Simple, Transparent Pricing</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              <h3 className="text-2xl font-bold mb-4">{plan.name}</h3>
-              <p className="text-4xl font-bold mb-6">
-                {plan.price}
-                <span className="text-lg font-normal">/mo</span>
-              </p>
-              <ul className="mb-8">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center mb-2">
-                    <Check className="w-5 h-5 mr-2 text-green-500" />
+    <section id="pricing" className="py-20 mx-12">
+      <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {pricingPlans.map((plan, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="flex flex-col overflow-hidden rounded-lg border bg-background p-6 shadow-md"
+          >
+            <div className="flex flex-col flex-1">
+              <h3 className="text-2xl font-bold">{plan.name}</h3>
+              <div className="mt-4 flex items-baseline text-3xl font-bold">
+                {typeof plan.price === "number" ? `$${plan.price}` : plan.price}
+                <span className="ml-1 text-xl font-normal text-muted-foreground">
+                  /month
+                </span>
+              </div>
+              <ul className="mt-6 space-y-4 flex-1">
+                {plan.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-start">
+                    <Check className="mr-2 h-5 w-5 text-primary" />
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-2 px-4 rounded transition duration-300">
-                Choose Plan
-              </button>
             </div>
-          ))}
-        </div>
+            <Button className="mt-8 w-full">{plan.buttonText}</Button>
+          </motion.div>
+        ))}
       </div>
     </section>
-  )
+  );
 }
-

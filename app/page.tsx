@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { Footer } from "./components/Footer";
+import Pricing from "./components/Pricing";
 import {
   Zap,
   Command,
@@ -137,42 +138,8 @@ export default function Home() {
               Telegram bots today.
             </p>
           </motion.div>
-          <div className="mt-12 grid gap-8 md:grid-cols-2">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex flex-col overflow-hidden rounded-lg border bg-background"
-              >
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold">{plan.name}</h3>
-                  <div className="mt-4 flex items-baseline text-3xl font-bold">
-                    ${plan.price}
-                    <span className="ml-1 text-xl font-normal text-muted-foreground">
-                      /month
-                    </span>
-                  </div>
-                  <p className="mt-4 text-muted-foreground">
-                    {plan.description}
-                  </p>
-                </div>
-                <div className="flex flex-1 flex-col justify-between p-6">
-                  <ul className="space-y-4">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start">
-                        <Check className="mr-2 h-5 w-5 text-primary" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button className="mt-8 w-full">{plan.buttonText}</Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+
+          <Pricing></Pricing>
         </section>
 
         <Separator className="my-12" />
@@ -235,34 +202,5 @@ const features = [
     name: "Custom Features",
     description: "Build custom features without touching any code.",
     icon: Sparkles,
-  },
-] as const;
-
-const pricingPlans = [
-  {
-    name: "Free",
-    price: 0,
-    description: "Perfect for small communities and hobbyists.",
-    features: [
-      "1 bot",
-      "Up to 100 users",
-      "Basic command set",
-      "Community support",
-    ],
-    buttonText: "Start for Free",
-  },
-  {
-    name: "Pro",
-    price: 8,
-    description: "Ideal for growing communities and businesses.",
-    features: [
-      "Unlimited bots",
-      "Unlimited users",
-      "Advanced commands",
-      "Priority support",
-      "Custom branding",
-      "Analytics dashboard",
-    ],
-    buttonText: "Upgrade to Pro",
   },
 ] as const;
