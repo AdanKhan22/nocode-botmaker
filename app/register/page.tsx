@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { SiteHeader } from "../components/site-header"
-import { Footer } from "../components/footer"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Link from "next/link"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { SiteHeader } from "../components/site-header";
+import { Footer } from "../components/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 export default function Register() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Handle registration logic here
-    console.log("Register with:", name, email, password)
-  }
+    console.log("Register with:", name, email, password);
+  };
 
   return (
     <div className="relative flex min-h-screen flex-col">
@@ -32,10 +32,15 @@ export default function Register() {
             className="w-full max-w-md space-y-8"
           >
             <div className="text-center">
-              <h2 className="mt-6 text-3xl font-bold tracking-tight">Create a new account</h2>
+              <h2 className="mt-6 text-3xl font-bold tracking-tight">
+                Create a new account
+              </h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Or{" "}
-                <Link href="/signin" className="font-medium text-primary hover:underline">
+                <Link
+                  href="/signin"
+                  className="font-medium text-primary hover:underline"
+                >
                   sign in to your existing account
                 </Link>
               </p>
@@ -92,6 +97,5 @@ export default function Register() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }
-
