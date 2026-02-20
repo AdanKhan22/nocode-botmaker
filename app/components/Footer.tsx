@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t bg-background mx-12">
-      <div className="container flex flex-col gap-10 py-16">
+   <footer className="border-t bg-background w-full px-6 md:px-12 lg:px-16">
+      <div className="flex flex-col gap-10 py-16">
         <div className="grid grid-cols-2 gap-12 md:grid-cols-4">
           <div className="flex flex-col gap-4">
             <h3 className="text-lg font-semibold">Product</h3>

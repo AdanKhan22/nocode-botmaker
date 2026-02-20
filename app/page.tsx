@@ -77,7 +77,7 @@ export default function Home() {
 
         <Separator className="my-12" />
 
-        <section className="container space-y-12 py-12 md:py-24 lg:py-32">
+        <section className="container mx-auto space-y-12 py-12 md:py-24 lg:py-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -124,7 +124,7 @@ export default function Home() {
 
         <Separator className="my-12" />
 
-        <section id="pricing" className="container py-12 md:py-24 lg:py-32">
+        <section id="pricing" className="container mx-auto py-12 md:py-24 lg:py-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +146,7 @@ export default function Home() {
 
         <Separator className="my-12" />
 
-        <section className="container py-12 md:py-24 lg:py-32">
+        <section className="container mx-auto py-12 md:py-24 lg:py-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
