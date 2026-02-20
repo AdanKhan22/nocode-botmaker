@@ -50,8 +50,12 @@ export default function ConnectAPIs({ formData, updateFormData }) {
       return;
     }
 
+    const apiUrl = process.env.NODE_ENV === "production"
+      ? "https://your-production-url.com/telegram/getMe"
+      : "http://localhost:5000/telegram/getMe";
+
     try {
-      const response = await fetch("http://localhost:5000/telegram/getMe", {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ botToken: telegramToken }),

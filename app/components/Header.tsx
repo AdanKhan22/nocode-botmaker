@@ -3,7 +3,7 @@ import Link from "next/link"
 export default function Header() {
   return (
     <header className="bg-gray-900 text-white py-4">
-      <div className="container mx-8 px-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           BotForge
         </Link>

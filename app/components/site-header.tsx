@@ -12,13 +12,14 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-// import { useAuth } from "@/hooks/useAuthHook";
-// import { signOut } from "@/lib/auth";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebaseClient";
+import { useAuth } from "@/hooks/useAuthHook"; 
 
 export function SiteHeader() {
   const pathname = usePathname();
   const isAuthPage = pathname === "/signin" || pathname === "/register";
-  // const { user } = useAuth();
+  const { user } = useAuth(); 
 
   return (
     <motion.header
@@ -100,7 +101,7 @@ export function SiteHeader() {
               <NavigationMenuLink asChild>
                 <Link
                   href="#pricing"
-                  className="h-10 px-4 py-2 block rounded-md text-center leading-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  className="h-10 px-4 block rounded-md text-center leading-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center justify-center"
                 >
                   Pricing
                 </Link>
@@ -110,21 +111,24 @@ export function SiteHeader() {
         </NavigationMenu>
 
         {/* Auth Buttons */}
-        {/* {!isAuthPage &&
-          (user ? (
-            <div className="flex gap-2">
+        {!isAuthPage && (
+          <div className="flex gap-2">
+            {user ? (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+               <Button variant="ghost" size="sm" onClick={() => signOut(auth)}>
+                            Sign Out
+               </Button>
+              </>
+            ) : (
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/signin">Log in</Link>
               </Button>
-              <Button variant="ghost" size="sm" onClick={signOut}>
-                Sign Out
-              </Button>
-            </div>
-          ) : (
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/signin">Log in</Link>
-            </Button>
-          ))} */}
+            )}
+          </div>
+        )}
       </div>
     </motion.header>
   );
