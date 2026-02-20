@@ -15,6 +15,7 @@ import {
   Sparkles,
   Check,
 } from "lucide-react";
+import Chatbot from './ai/Chatbot';
 
 export default function Home() {
   return (
@@ -165,6 +166,10 @@ export default function Home() {
               Start Building Now
             </Button>
           </motion.div>
+        </section>
+
+        <section>
+          <Chatbot />
         </section>
       </main>
       <Footer />
