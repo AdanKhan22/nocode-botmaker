@@ -69,9 +69,11 @@ export default function Home() {
                             Start Building
                   </Button>
              </Link>
+             <Link href="/build">
               <Button size="lg" variant="outline" className="h-12 px-8">
                 View Demo
               </Button>
+            </Link>
             </motion.div>
           </motion.div>
         </section>
