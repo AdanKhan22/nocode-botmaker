@@ -63,9 +63,11 @@ export default function Home() {
               transition={{ delay: 0.6 }}
               className="flex gap-4"
             >
-              <Button size="lg" className="h-12 px-8">
-                <Link href="../pages/getStarted/page">Start Building</Link>
-              </Button>
+             <Link href="/bot-customizer">
+                  <Button size="lg" className="h-12 px-8">
+                            Start Building
+                  </Button>
+             </Link>
               <Button size="lg" variant="outline" className="h-12 px-8">
                 View Demo
               </Button>
