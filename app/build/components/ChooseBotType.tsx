@@ -42,7 +42,7 @@ export default function ChooseBotType({ formData, updateFormData }) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Choose Bot Type</h2>
+      <h2 className="text-2xl font-bold mb-4 text-white">Choose Bot Type</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {botTypes.map((bot) => (
           <motion.div
@@ -51,16 +51,16 @@ export default function ChooseBotType({ formData, updateFormData }) {
             whileTap={{ scale: 0.95 }}
           >
             <Card
-              className={`cursor-pointer ${
+              className={`cursor-pointer transition-all border-2 rounded-lg shadow-md bg-black text-white h-full flex flex-col justify-between ${
                 selectedType === bot.id
-                  ? "border-primary-500 bg-primary-50"
-                  : ""
+                  ? "border-blue-500"
+                  : "border-gray-700"
               }`}
               onClick={() => handleSelect(bot.id)}
             >
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <bot.icon className="mr-2" />
+                  <bot.icon className="mr-2 text-blue-500" />
                   {bot.name}
                 </CardTitle>
               </CardHeader>
